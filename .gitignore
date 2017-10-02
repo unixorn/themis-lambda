@@ -1,3 +1,6 @@
+# Don't check in our event.json.
+event.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -99,3 +102,63 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Emacs
+*~
+.\#*
+.elc
+/.emacs.desktop
+/.emacs.desktop.lock
+\#*\#
+auto-save-list
+tramp
+
+# Emacs org-mode
+.org-id-locations
+*_archive
+
+# SublimeText
+*.sublime-project
+*.sublime-workspace
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+# Vim
+*.un~
+*~
+.*.s[a-w][a-z]
+.netrwhist
+Session.vim
+
+# macOS
+._*
+.AppleDouble
+.DS_Store
+.LSOverride
+.Spotlight-V100
+.Trashes
+Icon
+
+# Windows
+$RECYCLE.BIN/
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+
+# Misc
+*.*.un~
+*.a
+*.bz2
+*.gz
+*.o
+*.tbz
+*.tbz2
+*.tgz
+*.Z
+*.zip
+*~
+.bundle
+.rake_tasks
