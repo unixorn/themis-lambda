@@ -1,0 +1,3 @@
+boto3
+logrus >= 0.1.21
+python-lambda

@@ -1,7 +1,7 @@
 region: us-west-2
 
 function_name: themis_asg_scanner
-handler: service.handler
+handler: themis_lambda.handler
 description: Themis ASG instance scanner
 runtime: python2.7
 # role: lambda_basic_execution
