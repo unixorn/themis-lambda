@@ -179,14 +179,6 @@ def processASG(asgName=None,
                                                 instances=list(instances))
   this.logger.info('Statuses: %s', asgInstanceStatuses)
 
-  # if cliArgs.unprotectAllInstances:
-  #   # Unset instance protection
-  #   setASGInstanceProtection(client=asgClient,
-  #                            asgID=cliArgs.autoScalingGroup,
-  #                            instances=instances,
-  #                            dryRun=cliArgs.dryRun,
-  #                            protected=False)
-  # else:
   this.logger.info('Applying instance protection')
   if len(asgInstanceStatuses['busy'].keys()) > 0:
     setASGInstanceProtection(client=asgClient,
