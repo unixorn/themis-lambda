@@ -224,6 +224,7 @@ def handler(event, context):
   dryRun = event.get('dryRun')
   idleValue = event.get('idleValue')
   logLevel = event.get('logLevel')
+  logName = event.get('logName')
   metricsPort = event.get('metricsPort')
   region = event.get('region')
 
@@ -236,11 +237,12 @@ def handler(event, context):
   # Set up logging
   if not logLevel:
     logLevel = 'INFO'
+  if not logName:
+    logName = 'themis'
 
   logLevel = logLevel.upper()
 
-  logname = "themis-lambda-%s" % asgName
-  this.logger = getCustomLogger(name=logname, logLevel=logLevel)
+  this.logger = getCustomLogger(name=logName, logLevel=logLevel)
   this.logger.debug('Setting log level to %s', logLevel)
   this.logger.info('Processing %s', asgName)
 
