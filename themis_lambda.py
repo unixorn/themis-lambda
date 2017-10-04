@@ -114,12 +114,13 @@ def getInstanceWorkStatuses(client=None,
     this.logger.info('%s has IP %s, checking busy status', i, privateIP)
     try:
       statusURL = "http://%s:%s/%s" % (privateIP, metricsPort, busyURL)
-      this.logger.debug('Checking %s for instance status', statusURL)
+      this.logger.info('Checking %s for instance status', statusURL)
       probe = urllib2.urlopen(statusURL)
       workStatus = probe.read().lower().strip()
     except urllib2.URLError as e:
       workStatus = e.reason
       this.logger.warning(workStatus)
+      statuses['error'][i] = privateIP
     this.logger.info('status: %s', workStatus)
     if workStatus == busyValue.lower().strip():
       this.logger.info('adding %s to busy list', i)
@@ -128,7 +129,7 @@ def getInstanceWorkStatuses(client=None,
       this.logger.info('adding %s to idle list', i)
       statuses['idle'][i] = privateIP
     else:
-      this.logger.warning('%s is not reporting work state', i)
+      this.logger.warning('%s is not reporting a valid work state', i)
       statuses['error'][i] = privateIP
   return statuses
 
@@ -220,12 +221,11 @@ def handler(event, context):
   asgName = event.get('asgName')
   busyURL = event.get('busyURL')
   busyValue = event.get('busyValue')
+  dryRun = event.get('dryRun')
   idleValue = event.get('idleValue')
   logLevel = event.get('logLevel')
   metricsPort = event.get('metricsPort')
   region = event.get('region')
-  # debug = event.get('DEBUG')
-  dryRun = event.get('dryRun')
 
   # Sanity check and default setting
   if not asgName:
@@ -244,10 +244,9 @@ def handler(event, context):
   this.logger.debug('Setting log level to %s', logLevel)
   this.logger.info('Processing %s', asgName)
 
-  if not metricsPort:
-    # Use the standard Apgar port
-    metricsPort = 9000
-    this.logger.info('Using default metricsPort %s', metricsPort)
+  # Peel settings out of incoming event
+  if not dryRun:
+    dryRun = False
 
   if not busyURL:
     busyURL = '/work_status'
@@ -260,6 +259,11 @@ def handler(event, context):
   if not idleValue:
     idleValue = 'IDLE'
     this.logger.info('Using default idleValue %s', idleValue)
+
+  if not metricsPort:
+    # Use the standard Apgar port
+    metricsPort = 9000
+    this.logger.info('Using default metricsPort %s', metricsPort)
 
   if not region:
     region = 'us-west-2'
@@ -278,4 +282,3 @@ def handler(event, context):
                     busyValue=busyValue,
                     idleValue=idleValue,
                     dryRun=dryRun)
-  # return asgName
