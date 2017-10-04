@@ -16,12 +16,11 @@ Sample Trigger Event
 }
 '''
 
-import logging
 import sys
 import urllib2
 
 import boto3
-from logrus.utils import getCustomLogger, squashDicts
+from logrus.utils import getCustomLogger
 
 # this is a pointer to the module object instance itself. We'll attach
 # a logger to it later.
