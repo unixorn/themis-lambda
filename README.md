@@ -25,10 +25,12 @@ Themis is passed an event with an asgID definition.
 ```
 {
   "asgName": "Electric-Ziggurat",
+  "region": "us-tirefire-1"
   "metricsPort": 9000,
   "busyURL": "work_status",
   "busyValue": "BUSY",
-  "idleValue": "IDLE"
+  "idleValue": "IDLE",
+  "dryRun": false
 }
 
 ```
